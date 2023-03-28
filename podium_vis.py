@@ -8,84 +8,84 @@ import os
 import argparse
 
 def plot_tel_data(year, location, session):
-    # Setup cache for faster data loading
-if not os.path.exists('cache'):
-    os.mkdir('cache')
-    print('Made directory "cachce" to use caching...')
-ff.Cache.enable_cache('cache')
+        # Setup cache for faster data loading
+    if not os.path.exists('cache'):
+        os.mkdir('cache')
+        print('Made directory "cachce" to use caching...')
+    ff.Cache.enable_cache('cache')
 
-# Enable some matplotlib patches for plotting timedelta values and load
-# FastF1's default color scheme
-ff.plotting.setup_mpl()
+    # Enable some matplotlib patches for plotting timedelta values and load
+    # FastF1's default color scheme
+    ff.plotting.setup_mpl()
 
-# Load in race session
-race = ff.get_session(year, location, session)
-race.load()
+    # Load in race session
+    race = ff.get_session(year, location, session)
+    race.load()
 
-# Get event name
-event_name = race.event['EventName']
+    # Get event name
+    event_name = race.event['EventName']
 
-# Get top podium abbreviations
-podium_abb = race.results['Abbreviation'][0:3]
+    # Get top podium abbreviations
+    podium_abb = race.results['Abbreviation'][0:3]
 
-# Creating an accessible dictionary for the podium \
-# that accesses the laps table for each driver.
-# Accessing the team colour as well...
-# driver_dict = {}
-# for driver in podium_abb:
-#     driver_dict[driver] = [race.laps.pick_driver(driver), \
-#     fastf1.plotting.team_color(race.laps.pick_driver(driver).Team.unique()[0])]
+    # Creating an accessible dictionary for the podium \
+    # that accesses the laps table for each driver.
+    # Accessing the team colour as well...
+    # driver_dict = {}
+    # for driver in podium_abb:
+    #     driver_dict[driver] = [race.laps.pick_driver(driver), \
+    #     fastf1.plotting.team_color(race.laps.pick_driver(driver).Team.unique()[0])]
 
-driver_dict = {}
-for driver in podium_abb:
-    driver_dict[driver] = [race.laps.pick_driver(driver).pick_fastest().get_car_data().add_distance(), \
-    fastf1.plotting.team_color(race.laps.pick_driver(driver).Team.unique()[0])]
+    driver_dict = {}
+    for driver in podium_abb:
+        driver_dict[driver] = [race.laps.pick_driver(driver).pick_fastest().get_car_data().add_distance(), \
+        fastf1.plotting.team_color(race.laps.pick_driver(driver).Team.unique()[0])]
 
-# Plotting top three podiums lap number against time
-fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5, 1, sharex=True)
-for driver in driver_dict:
-    ax1.plot(driver_dict[driver][0]['Distance'], \
-    driver_dict[driver][0]['RPM'], \
-    # color=driver_dict[driver][1],
-    label=driver)
-    ax2.plot(driver_dict[driver][0]['Distance'], \
-    driver_dict[driver][0]['Speed'], \
-    # color=driver_dict[driver][1],
-    label=driver)
-    ax3.plot(driver_dict[driver][0]['Distance'], \
-    driver_dict[driver][0]['Throttle'], \
-    # color=driver_dict[driver][1],
-    label=driver)
-    ax4.plot(driver_dict[driver][0]['Distance'], \
-    driver_dict[driver][0]['Brake'], \
-    # color=driver_dict[driver][1],
-    label=driver)
-    ax5.plot(driver_dict[driver][0]['Distance'], \
-    driver_dict[driver][0]['nGear'], \
-    # color=driver_dict[driver][1],
-    label=driver)
-# ax.set_title(f"Podium Fastest Lap Speed Comparison for {event_name}")
-ax1.set_ylabel("RPM")
-ax1.legend()
+    # Plotting top three podiums lap number against time
+    fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5, 1, sharex=True)
+    for driver in driver_dict:
+        ax1.plot(driver_dict[driver][0]['Distance'], \
+        driver_dict[driver][0]['RPM'], \
+        # color=driver_dict[driver][1],
+        label=driver)
+        ax2.plot(driver_dict[driver][0]['Distance'], \
+        driver_dict[driver][0]['Speed'], \
+        # color=driver_dict[driver][1],
+        label=driver)
+        ax3.plot(driver_dict[driver][0]['Distance'], \
+        driver_dict[driver][0]['Throttle'], \
+        # color=driver_dict[driver][1],
+        label=driver)
+        ax4.plot(driver_dict[driver][0]['Distance'], \
+        driver_dict[driver][0]['Brake'], \
+        # color=driver_dict[driver][1],
+        label=driver)
+        ax5.plot(driver_dict[driver][0]['Distance'], \
+        driver_dict[driver][0]['nGear'], \
+        # color=driver_dict[driver][1],
+        label=driver)
+    # ax.set_title(f"Podium Fastest Lap Speed Comparison for {event_name}")
+    ax1.set_ylabel("RPM")
+    ax1.legend()
 
-ax2.set_ylabel("Speed Km/h")
-ax2.legend()
+    ax2.set_ylabel("Speed Km/h")
+    ax2.legend()
 
-ax3.set_ylabel("Throttle %")
-ax3.legend()
+    ax3.set_ylabel("Throttle %")
+    ax3.legend()
 
-ax4.set_ylabel("Brake %")
-ax4.legend()
+    ax4.set_ylabel("Brake %")
+    ax4.legend()
 
-ax5.set_xlabel("Distance m")
-ax5.set_ylabel("nGear")
-ax5.legend()
+    ax5.set_xlabel("Distance m")
+    ax5.set_ylabel("nGear")
+    ax5.legend()
 
-# Adjust the layout to avoid overlapping labels
-plt.tight_layout()
+    # Adjust the layout to avoid overlapping labels
+    plt.tight_layout()
 
-# Show the plots
-plt.show()
+    # Show the plots
+    plt.show()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
