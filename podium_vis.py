@@ -28,14 +28,6 @@ def plot_tel_data(year, location, session):
     # Get top podium abbreviations
     podium_abb = race.results['Abbreviation'][0:3]
 
-    # Creating an accessible dictionary for the podium \
-    # that accesses the laps table for each driver.
-    # Accessing the team colour as well...
-    # driver_dict = {}
-    # for driver in podium_abb:
-    #     driver_dict[driver] = [race.laps.pick_driver(driver), \
-    #     fastf1.plotting.team_color(race.laps.pick_driver(driver).Team.unique()[0])]
-
     driver_dict = {}
     for driver in podium_abb:
         driver_dict[driver] = [race.laps.pick_driver(driver).pick_fastest().get_car_data().add_distance(), \
@@ -64,7 +56,7 @@ def plot_tel_data(year, location, session):
         driver_dict[driver][0]['nGear'], \
         # color=driver_dict[driver][1],
         label=driver)
-    # ax.set_title(f"Podium Fastest Lap Speed Comparison for {event_name}")
+
     ax1.set_ylabel("RPM")
     ax1.legend()
 
@@ -80,6 +72,9 @@ def plot_tel_data(year, location, session):
     ax5.set_xlabel("Distance m")
     ax5.set_ylabel("nGear")
     ax5.legend()
+
+    # Setting title
+    ax1.set_title(f"{event_name} {year} Telemetery")
 
     # Adjust the layout to avoid overlapping labels
     plt.tight_layout()
