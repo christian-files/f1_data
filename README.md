@@ -21,7 +21,7 @@ Running the following code will give you an output shown below:
 ```
 python podium_vis.py -y 2018 -e 'British GP' -s 'R'
 ```
-<img width="1330" alt="image" src="https://user-images.githubusercontent.com/116644174/228367804-15534cad-b202-4abe-94de-d31f49c1dc5d.png">
+<img width="1308" alt="image" src="https://user-images.githubusercontent.com/116644174/228486840-eff23087-0fdc-493e-ad93-c4a51f53563f.png">
 
 ### Note
 Some further modifications are still needed here as the legend is overlapping the visualisations and driver colours do not represent accurately. The driver colour code does exist, but is commented out. This is because there was a clash of colour when two of the same team were in the top three and made the graphs hard to read.
