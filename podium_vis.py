@@ -74,7 +74,7 @@ def plot_tel_data(year, location, session):
     ax5.legend()
 
     # Setting title
-    ax1.set_title(f"{event_name} {year} Telemetery")
+    ax1.set_title(f"{event_name} {year} Telemetry")
 
     # Adjust the layout to avoid overlapping labels
     plt.tight_layout()
